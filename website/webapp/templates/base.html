@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+
+<a href= "{{ url_for('index') }}"><h1>{{ar.title}}</h1> </a>
+<a href= "{{ url_for('index') }}" >الصفحة العامة</a>
+<a href= "{{ url_for('discord') }}" >مجلس الدسكورد</a>
+<a href= "{{ url_for('add_entry') }}" >رصد الألفاظ</a>
+{% if current_user.is_anonymous %}
+<a href= "{{ url_for('login') }}" >{{ar.login}}</a>
+{% else %}
+<a href= "{{ url_for('logout') }}" >{{ar.logout}}</a>
+{% endif %}
+
+{% if current_user.isadmin %}
+<a href= "{{ url_for('pending') }}" >{{ar.accept}}</a>
+{% endif %}
+
+<br>
+<label>حللت أهلًا {{'زائرنا الكريم' if current_user.is_anonymous else 'يا ' + current_user.username }}</label>
+
+<hr>
+
+
+
+  
+
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul>
+    {% for message in messages %}
+    <li style="color: red;">{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+
+{% block content %}{% endblock %}

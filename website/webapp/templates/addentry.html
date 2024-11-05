@@ -1,0 +1,43 @@
+{%extends 'base.html'%}
+
+{%block content%}
+
+<h1>مرصد الألفاظ</h1>
+<label>هذه صفحة الرصد لمن شاء المساهمة في معجمنا هذا, جميع المرصودات يدققها المشرفون فإما تُقبل وتنشر في المعجم, وإما تُرد</label>
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.original.label }}<br>
+        {{ form.original() }}<br>
+        {% for error in form.original.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.translationese.label }}<br>
+        {{ form.translationese() }}<br>
+        {% for error in form.translationese.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+
+    <p>
+        {{form.origin.label}}<br>
+        {{form.origin()}}<br>
+        {% for error in form.origin.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+
+    <p>
+        {{ form.corrections.label }}<br>
+        {{ form.corrections() }}<br>
+        {% for error in form.corrections.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+
+    <p>{{ form.submit() }}</p>
+</form>
+
+{%endblock%}

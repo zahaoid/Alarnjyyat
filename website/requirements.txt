@@ -1,0 +1,6 @@
+psycopg2
+flask
+flask-login
+flask_wtf
+wtforms
+email_validator

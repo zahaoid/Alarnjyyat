@@ -1,0 +1,20 @@
+<label>اللفظة الإفرنجية: {{entry.original}}</label>
+<br>
+<label>اللفظة العرنجية: {{entry.translationese}}</label>
+<br>
+<label>دخيلة من: {{ar.languages[entry.origin]}}</label>
+<br>
+<label>المعنى المراد: 
+    {% for correction in entry.corrections%}
+        {{correction}}, 
+    {%endfor%}
+</label>
+<br>
+
+
+
+<label>رصدها: {{"زائرٌ كريم" if entry.submitter==None else entry.submitter}}</label>
+<label>عند: {{entry.timestamp}}</label>
+<label>قبلها ودققها: {{entry.approvedby}}</label>
+
+<br>

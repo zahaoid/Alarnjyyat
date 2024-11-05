@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h2>آخر المرصودات</h2>
+
+    {%for entry in entries%}
+        {%include '_entry.html'%}
+        <a href=" {{url_for ('entry_page', entryid=entry.id ) }} ">اطلاع</a>
+        {% if current_user.isadmin and not entry.approvedby %}
+        <a href=" {{url_for ('accept', entryid=entry.id ) }} ">قبول اللفظة</a>  
+        {% endif %}
+        <hr>
+    {%endfor%}
+
+    {% if prev_url %}
+    <a href="{{ prev_url }}">اللاحقة</a>
+    {% endif %}
+    {% if next_url %}
+    <a href="{{ next_url }}">السابقة</a>
+    {% endif %}
+    
+{% endblock %}
