@@ -3,6 +3,8 @@ services:
     website:
         build: ./src
         container_name: website
+        depends_on:
+            - database
         volumes: 
             - ./src:/home/app/src
         
@@ -19,6 +21,18 @@ services:
         tty: true
 
         command: python3 -m flask run --host 0.0.0.0
+
+    database:
+        image: postgres:alpine
+        container_name: database
+        volumes:
+            - $HOME/db_mount:/var/lib/postgresql/data
+        networks:
+            - dictionary
+        ports:
+            - '127.0.0.1:5432:5432'
+
+        env_file: ./secrets.env
 
 
 networks:
