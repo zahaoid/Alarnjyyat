@@ -1,7 +1,8 @@
-from webapp import app, db, ar, login as lg
+from flaskapp.main import app, ar, login as lg
+from database.main import qr
 from flask import render_template, flash, redirect, url_for, request, abort
-from webapp.modules.forms import LoginForm, RegisterForm, AddEntry
-from webapp.modules.models import User
+from flaskapp.modules.forms import LoginForm, RegisterForm, AddEntry
+from flaskapp.modules.models import User
 from flask_login import current_user, login_user, login_required
 from flask_login import logout_user
 from urllib.parse import urlsplit
@@ -14,7 +15,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template("home.html", entries= db.getAllEntries())
+    return render_template("home.html", entries= qr.getAllEntries())
 
 @app.route('/discord')
 def discord():
@@ -23,7 +24,7 @@ def discord():
 
 @lg.user_loader
 def load_user(username):
-    user_info = db.getUser(username)
+    user_info = qr.getUser(username)
     #this check is important for when the user is logged in and gets deleted from the database during the session
     if user_info:
         return User(username= user_info['username'], isadmin=user_info['isadmin'])
@@ -40,7 +41,7 @@ def login():
     loginform = LoginForm()
     #if it is a POST request
     if loginform.validate_on_submit():
-        user_info = db.getUser(loginform.username.data)
+        user_info = qr.getUser(loginform.username.data)
         if not user_info or not check_password_hash(user_info['passwordhash'] ,loginform.password.data):
             flash(ar.username +" و"+ ar.password +" أو إحداهما خاطئ")
             return redirect(url_for('login'))
@@ -73,7 +74,7 @@ def register():
     #if POST
     if reigtserform.validate_on_submit():
         user_info = {'username': reigtserform.username.data, 'email': reigtserform.email.data, 'passwordhash': generate_password_hash(reigtserform.password.data)}
-        db.addUser(user_info)
+        qr.addUser(user_info)
         flash('حياك الله بيننا يا ' + user_info['username'])
         return redirect(url_for('login'))
 
@@ -102,7 +103,7 @@ def add_entry():
         entry_info['corrections'] = corrections
 
 
-        db.addEntry(entry_info)
+        qr.addEntry(entry_info)
         
         flash('رصدت اللفظة, وسيراجعها أحد المشرفين لقبولها ونشرها')
         return redirect(url_for('index'))
@@ -113,7 +114,7 @@ def add_entry():
 
 @app.route('/entries/<entryid>')
 def entry_page(entryid):
-    entry = db.getEntry(entryid=entryid)
+    entry = qr.getEntry(entryid=entryid)
     if not entry: abort(404)
 
     return render_template('entry.html', entry=entry)
@@ -125,7 +126,7 @@ def pending():
     if not current_user.isadmin:
         return "لا يجوز لك دخول هذه الصفحة", 404
     
-    entries = db.getAllEntries(desc=False, limit=None, isapproved=False)
+    entries = qr.getAllEntries(desc=False, limit=None, isapproved=False)
     return render_template("home.html", entries= entries)
 
 @app.route('/pending/<int:entryid>')
@@ -134,6 +135,6 @@ def accept(entryid: int):
     if not current_user.isadmin:
         return "لا يجوز لك دخول هذه الصفحة", 404
     
-    db.acceptEntry(entryid=entryid, approvedby=current_user.username)
+    qr.acceptEntry(entryid=entryid, approvedby=current_user.username)
     flash('قبلت اللفظة ونشرت')
     return redirect(url_for('pending'))

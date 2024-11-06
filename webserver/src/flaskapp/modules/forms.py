@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectField, HiddenField
 from wtforms.validators import DataRequired, EqualTo, Email, ValidationError, Length
-from webapp import ar, db
-
+from flaskapp.main import ar
+from database.main import qr
 class LoginForm(FlaskForm):
     username = StringField(ar.username, validators=[DataRequired()])
     password = PasswordField(ar.password, validators=[DataRequired()])
@@ -18,12 +18,12 @@ class RegisterForm(FlaskForm):
     submit = SubmitField(ar.register)
 
     def validate_username(self, username):
-        if db.doesValueExist(table='users', column='username', value=username.data):
+        if qr.doesValueExist(table='users', column='username', value=username.data):
             raise ValidationError(ar.username +  'هذا سبق استعماله, اختر غيره')
             
         
     def validate_email(self, email):
-        if db.doesValueExist(table='users', column='email', value=email.data):
+        if qr.doesValueExist(table='users', column='email', value=email.data):
             raise ValidationError('هذا سبق استعماله, اختر غيره أو سجّل دخولك به')
 
 

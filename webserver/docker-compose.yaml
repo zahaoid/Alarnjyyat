@@ -1,0 +1,26 @@
+version: '3'
+services:
+    website:
+        build: ./src
+        container_name: website
+        volumes: 
+            - ./src:/home/app/src
+        
+        networks:
+            - dictionary
+        ports:
+            - '127.0.0.1:5000:5000'
+        environment:
+            - FLASK_APP=main.py
+        env_file: ./secrets.env
+        
+        user: app
+        stdin_open: true
+        tty: true
+
+        command: python3 -m flask run --host 0.0.0.0
+
+
+networks:
+    dictionary:
+        external: true
