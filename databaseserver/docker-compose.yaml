@@ -3,7 +3,7 @@ services:
         image: postgres:alpine
         container_name: database
         volumes:
-            - ../../../db_mount:/var/lib/postgresql/data
+            - $HOME/db_mount:/var/lib/postgresql/data
         networks:
             - dictionary
         ports:
