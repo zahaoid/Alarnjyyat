@@ -4,4 +4,10 @@
 
     {% include '_entry.html' %}
 
+    <p>
+        <label>رصدها: {{"زائرٌ كريم" if entry.submitter==None else entry.submitter}}</label>
+        <label>عند: {{entry.timestamp}}</label>
+        <label>قبلها ودققها: {{entry.approvedby}}</label>
+    </p>
+
 {% endblock %}

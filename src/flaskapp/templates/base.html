@@ -1,39 +1,60 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 
-<a href= "{{ url_for('index') }}"><h1>{{ar.title}}</h1> </a>
-<a href= "{{ url_for('index') }}" >الصفحة العامة</a>
-<a href= "{{ url_for('discord') }}" >مجلس الدسكورد</a>
-<a href= "{{ url_for('add_entry') }}" >رصد الألفاظ</a>
-{% if current_user.is_anonymous %}
-<a href= "{{ url_for('login') }}" >{{ar.login}}</a>
-{% else %}
-<a href= "{{ url_for('logout') }}" >{{ar.logout}}</a>
-{% endif %}
+<head>
+    <meta charset="UTF-8">
+    <title>معجم العرنجيات</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/main.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='fonts/Tajawal.css') }}" type="text/css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
+</head>
 
-{% if current_user.isadmin %}
-<a href= "{{ url_for('pending') }}" >{{ar.accept}}</a>
-{% endif %}
+<body class="tajawal-bold">
+    
 
-<br>
-<label>حللت أهلًا {{'زائرنا الكريم' if current_user.is_anonymous else 'يا ' + current_user.username }}</label>
+    <header class="top">
+        <a href= "{{ url_for('index') }}"><h1>معجم العرنجيات</h1> </a>
+        <nav>
+            <a href= "{{ url_for('index') }}" >(الصفحة العامة)</a>
+            <a href= "{{ url_for('discord') }}" >(مجلس الدسكورد)</a>
+            <a href= "{{ url_for('add_entry') }}" >(رصد الألفاظ)</a>
+            {% if current_user.is_anonymous %}
+            <a href= "{{ url_for('login') }}" >({{ar.login}})</a>
+            {% else %}
+            <a href= "{{ url_for('logout') }}" >({{ar.logout}})</a>
+            {% endif %}
+            {% if current_user.isadmin %}
+            <a href= "{{ url_for('pending') }}" >({{ar.accept}})</a>
+            {% endif %}
+        </nav>
+        <p style="color: green;">حللت أهلًا {{'زائرنا الكريم' if current_user.is_anonymous else 'يا ' + current_user.username }}</p>
+    </header>
 
-<hr>
+    <hr>
 
+    <main class="tajawal-medium">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li style="color: red;">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
 
+        {% block content %}{% endblock %}
+    </main>
 
-  
+    <hr>
 
+    <footer>
+        <p>
+            معجم العرنجيات
+        </p>
+    </footer>
+</body>
 
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-<ul>
-    {% for message in messages %}
-    <li style="color: red;">{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-{% endwith %}
-
-
-{% block content %}{% endblock %}
+</html>

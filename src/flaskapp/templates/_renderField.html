@@ -1,0 +1,20 @@
+{% macro render_field(field, hide_label=False, horizontal=False) %}
+
+
+<p>
+    {% if hide_label == False %}
+    {{field.label}}
+    {% endif %}
+    {% if horizontal == False %}
+    <br>
+    {% endif %}
+    {{field(**kwargs)|safe}}
+    <br>
+    <ul>
+        {% for error in field.errors %}
+            <li style="color: red;">[{{ error }}]</li>
+        {% endfor %}
+    </ul>
+</p>
+
+{% endmacro %}

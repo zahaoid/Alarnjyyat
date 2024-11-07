@@ -1,27 +1,20 @@
+{% from "_renderField.html" import render_field %}
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>صفحة {{ar.login}}</h1>
+    <h2>صفحة {{ar.login}}</h2>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
+        
+        {{render_field(form.username)}}
+        {{render_field(form.password)}}
+        {{render_field(form.remember_me, horizontal=True)}}
+        {{render_field(form.submit, hide_label=True)}}
+        
         <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}<br>
-            {% for error in form.username.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
+            إن ما سبق لك التسجيل فسجّل 
+            <a href= "{{ url_for('register') }}" >هنا</a>
         </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}<br>
-            {% for error in form.password.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-        <p>{{ form.submit() }}</p>
-        <br>
-        <label>إن ما سبق لك التسجيل فسجّل </label>
-        <a href= "{{ url_for('register') }}" >هنا</a>
+        
     </form>
 {% endblock %}
