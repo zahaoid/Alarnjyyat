@@ -1,17 +1,8 @@
-{% from "_renderField.html" import render_field %}
-
+{% from "_renderForm.html" import render_form %}
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>{{ar.register}}</h2>
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        
-        {{render_field(form.username)}}
-        {{render_field(form.email)}}
-        {{render_field(form.password)}}
-        {{render_field(form.password2)}}
-        {{render_field(form.submit, hide_label=True)}}
+    
+{{render_form(title=ar.register, form=form, sub_html="_register.html", add_margin=True)}}
 
-    </form>
 {% endblock %}

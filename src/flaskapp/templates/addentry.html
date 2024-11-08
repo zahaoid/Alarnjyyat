@@ -1,22 +1,8 @@
-{% from "_renderField.html" import render_field %}
-
+{% from "_renderForm.html" import render_form %}
 {%extends 'base.html'%}
 
 {%block content%}
 
-<h2>مرصد الألفاظ</h2>
-<p>هذه صفحة الرصد لمن شاء المساهمة في معجمنا هذا, جميع المرصودات يدققها المشرفون فإما تُقبل وتنشر في المعجم, وإما تُرد</p>
-<form action="" method="post">
-    {{ form.hidden_tag() }}
-    
-    {{render_field(form.original)}}
-    {{render_field(form.translationese)}}
-    {{render_field(form.origin)}}
-    {{render_field(form.corrections)}}
-    {{render_field(form.context)}}
-
-
-    <p>{{ form.submit() }}</p>
-</form>
+{{render_form(title="مرصد الألفاظ", form=form, sub_html="_addEntry.html", add_margin=True)}}
 
 {%endblock%}

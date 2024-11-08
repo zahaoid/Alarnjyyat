@@ -1,0 +1,12 @@
+{% from "_renderField.html" import render_field %}
+
+<p>هذه صفحة الرصد لمن شاء المساهمة في معجمنا هذا, جميع المرصودات يدققها المشرفون فإما تُقبل وتنشر في المعجم, وإما تُرد</p>
+
+{{render_field(form.original, horizontal=False)}}
+{{render_field(form.translationese, horizontal=False)}}
+{{render_field(form.origin, horizontal=False)}}
+{{render_field(form.corrections, horizontal=False)}}
+{% for field in form.context %}
+{{render_field(field, horizontal=False)}}
+{% endfor %}
+{{render_field(form.submit, hide_label=True)}}

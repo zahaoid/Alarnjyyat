@@ -1,0 +1,8 @@
+{% from "_renderField.html" import render_field %}
+
+
+{{render_field(form.username, horizontal=False)}}
+{{render_field(form.email, horizontal=False)}}
+{{render_field(form.password, horizontal=False)}}
+{{render_field(form.password2, horizontal=False)}}
+{{render_field(form.submit, hide_label=True)}}

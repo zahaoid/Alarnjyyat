@@ -1,12 +1,37 @@
 <section>
-    <p>اللفظة الإفرنجية: {{entry.original}}</p>
-    <p>اللفظة العرنجية: {{entry.translationese}}</p>
-    <p>دخيلة من: {{ar.languages[entry.origin]}}</p>
-    <p>المعنى المراد: 
-        {% for correction in entry.corrections%}
-        ({{correction}})
-        {%endfor%}
-    </p>
+    <div>
+        <label for="original" class="label">اللفظة الإفرنجية</label>
+        <span id="original" class="info">{{entry.original}}</span>
+    </div>
+    <div>
+        <label for="translationese" class="label">اللفظة العرنجية: </label>
+        <span id="translationese" class="info">{{entry.translationese}}</span>
+    </div>
+    <div>
+        <label for="origin" class="label">دخيلة من: </label>
+        <span id="origin" class="info">{{ar.languages[entry.origin]}}</span>
+    </div>
+    <div>
+        {% if entry.corrections %}
+        <label for="corrections" class="label">المعنى المراد: </label>
+        <ul id="corrections">
+            {% for correction in entry.corrections%}
+            <span class="correction info">{{correction['correction']}}</span>
+            {%endfor%}
+        </ul>
+        {% endif %}
+    </div>
 
-    <br>
+    <div>
+        {% if entry.contexts %}
+        <label for="contexts" class="label">أمثلة وسياقات: </label>
+        <ul id="contexts" class="vertical">
+            {% for context in entry.contexts %}
+            <p><span class="info context ar-context">{{context['arcontext']}}</span></p>
+            <p><span class="info context tr-context">{{context['trcontext']}}</span></p>
+            {%endfor%}
+        </ul>
+        {% endif %}
+    </div>
+
 </section>

@@ -1,0 +1,31 @@
+.correction, .context{
+    padding: 3px;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0.1rem;
+}
+
+.correction{
+    background-color: rgba(139, 69, 19, 0.137);
+}
+
+.tr-context:before{
+    content: "ولا تقل: ";
+    color: red;
+}
+
+.ar-context:before{
+    content: "قل: ";
+    color: green;
+}
+
+
+.info{
+    color: dimgray;
+}
+
+.label{
+    color: black;
+}
+

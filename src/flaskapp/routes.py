@@ -25,7 +25,9 @@ def discord():
 @lg.user_loader
 def load_user(username):
     user_info = qr.getUser(username)
-    #this check is important for when the user is logged in and gets deleted from the database during the session
+
+    #this check is important for when the user was logged in but got deleted from the database before
+    #the session expired, if user doesnt exist then this must return None according to flask-login doc
     if user_info:
         return User(username= user_info['username'], isadmin=user_info['isadmin'])
     else:
@@ -46,7 +48,7 @@ def login():
             flash(ar.username +" و"+ ar.password +" أو إحداهما خاطئ")
             return redirect(url_for('login'))
         user = User(username=user_info['username'], isadmin=user_info['isadmin'])
-        login_user(user, remember=loginform.remember_me)
+        login_user(user, remember=loginform.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or urlsplit(next_page).netloc != '':
             next_page = url_for('index')
@@ -70,40 +72,57 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for("index"))
     
-    reigtserform = RegisterForm()
+    registerform = RegisterForm()
+
     #if POST
-    if reigtserform.validate_on_submit():
-        user_info = {'username': reigtserform.username.data, 'email': reigtserform.email.data, 'passwordhash': generate_password_hash(reigtserform.password.data)}
-        qr.addUser(user_info)
-        flash('حياك الله بيننا يا ' + user_info['username'])
+    if registerform.validate_on_submit():
+        qr.addUser(username=registerform.username.data, passwordhash=registerform.email.data, email=registerform.password.data)
+        flash('حياك الله بيننا يا ' + registerform.username.data)
         return redirect(url_for('login'))
 
 
     #if it is a GET request
-    return render_template('registerform.html', form= reigtserform)
+    return render_template('registerform.html', form=registerform)
 
 
 @app.route("/addentry", methods=["GET", "POST"])
 def add_entry():
-    entryform = AddEntry()
 
-    #POST
-    if entryform.validate_on_submit():
-        entry_info = {'original':entryform.original.data, 'translationese':entryform.translationese.data, 'origin':entryform.origin.data, 'submitter':current_user.username if current_user.is_authenticated else None}
-
-        corrections = entryform.corrections.data
-
-        corrections = corrections.replace('.', ',') #fool proofing
-        corrections = corrections.split(',') #self-explaintory
+    ############## HELPER FUNCTION ################
+    primarySeperator = ','
+    altSeperators = ['،', '.']
+    def parseCorrectionsIntoList(correctionsString):
+        
+        #subtitutes alt seperators
+        for altSeperator in altSeperators:
+            correctionsString = correctionsString.replace(altSeperator, primarySeperator) 
+        corrections = correctionsString.split(primarySeperator) #self-explaintory
         corrections = map(lambda c: " ".join(c.split()) ,corrections) #strips extra spaces
         corrections = filter(lambda c: c != "", corrections) #removes empty elements
         corrections = set(corrections) #removes duplicates            
         corrections = list(corrections) # "because why not" -pyhton
+        return corrections
 
-        entry_info['corrections'] = corrections
 
+    entryform = AddEntry()
 
-        qr.addEntry(entry_info)
+    #POST
+    if entryform.validate_on_submit():
+
+        corrections = parseCorrectionsIntoList(entryform.corrections.data)
+        arcontext = entryform.context.data['arcontext']
+        trcontext = entryform.context.data['trcontext']
+        contexts = list[tuple[str, str]]()
+
+        # TRCONTEXT FIRST THEN ARCONTEXT!!
+        contexts.append((trcontext, arcontext))
+
+        qr.addEntry(origin = entryform.origin.data,
+                    original = entryform.original.data,
+                    translationese = entryform.translationese.data,
+                    submitter = current_user.username if current_user.is_authenticated else None, 
+                    corrections = corrections, 
+                    contexts=contexts)
         
         flash('رصدت اللفظة, وسيراجعها أحد المشرفين لقبولها ونشرها')
         return redirect(url_for('index'))
@@ -138,3 +157,6 @@ def accept(entryid: int):
     qr.acceptEntry(entryid=entryid, approvedby=current_user.username)
     flash('قبلت اللفظة ونشرت')
     return redirect(url_for('pending'))
+
+
+

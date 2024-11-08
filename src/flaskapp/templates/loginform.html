@@ -1,20 +1,8 @@
-{% from "_renderField.html" import render_field %}
+{% from "_renderForm.html" import render_form %}
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>صفحة {{ar.login}}</h2>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        
-        {{render_field(form.username)}}
-        {{render_field(form.password)}}
-        {{render_field(form.remember_me, horizontal=True)}}
-        {{render_field(form.submit, hide_label=True)}}
-        
-        <p>
-            إن ما سبق لك التسجيل فسجّل 
-            <a href= "{{ url_for('register') }}" >هنا</a>
-        </p>
-        
-    </form>
+    
+{{render_form(title="صفحة " + ar.login, form=form, sub_html="_login.html", add_margin=True)}}
+
 {% endblock %}

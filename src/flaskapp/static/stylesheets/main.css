@@ -5,7 +5,6 @@ html{
 body{
     background-color: gainsboro;
     color: black;
-
 }
 
 a, a:visited{
@@ -22,18 +21,56 @@ hr {
 }
 
 .top {
-    background-color: rgb(212, 208, 208);
-    padding: 5px;
+    background-color: rgba(218, 206, 199, 0.295);
+    padding: 1px;
+
 }
 
 
-footer{
+.footer{
     text-align: center;
 }
 
-@media screen and (min-width:900px){
-    body{
-        margin-left: 15%;
-        margin-right: 15%;
-    }
+
+.errors{
+    color: red;
+}
+
+#register-prompt{
+    text-align: center;
+}
+
+.action:before{
+    content: "<";
+}
+
+.action:after{
+    content: ">";
+}
+
+
+.main, .top-content {
+    margin-inline: max(0px,50% - 800px/2);
+}
+
+
+.entry{
+    padding: 10px;
+    background-color: rgba(218, 206, 199, 0.295);
+    border-radius: 5px;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0.1rem;
+}
+
+.entry-seperator{
+    padding: 20px;
+}
+
+.entry-listing-content{
+    margin-right: 5%;
+}
+
+.entry-action-bar{
+    padding: 2px;
 }

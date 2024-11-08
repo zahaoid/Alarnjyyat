@@ -16,13 +16,13 @@
     font-style: normal;
   }
   
-  .tajawal-medium {
+  .tajawal-medium, *{
     font-family: "Tajawal", sans-serif;
     font-weight: 500;
     font-style: normal;
   }
   
-  .tajawal-bold {
+  .tajawal-bold, h1, h2, h3{
     font-family: "Tajawal", sans-serif;
     font-weight: 700;
     font-style: normal;
