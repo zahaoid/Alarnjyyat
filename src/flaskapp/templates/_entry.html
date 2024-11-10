@@ -1,37 +1,53 @@
-<section>
-    <div>
-        <label for="original" class="label">اللفظة الإفرنجية</label>
-        <span id="original" class="info">{{entry.original}}</span>
-    </div>
-    <div>
-        <label for="translationese" class="label">اللفظة العرنجية: </label>
-        <span id="translationese" class="info">{{entry.translationese}}</span>
-    </div>
-    <div>
-        <label for="origin" class="label">دخيلة من: </label>
-        <span id="origin" class="info">{{ar.languages[entry.origin]}}</span>
-    </div>
-    <div>
-        {% if entry.corrections %}
-        <label for="corrections" class="label">المعنى المراد: </label>
-        <ul id="corrections">
-            {% for correction in entry.corrections%}
-            <span class="correction info">{{correction['correction']}}</span>
-            {%endfor%}
-        </ul>
-        {% endif %}
-    </div>
+{% block more_css%} 
+<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/entry.css') }}" type="text/css">
+{% endblock %}
 
-    <div>
-        {% if entry.contexts %}
-        <label for="contexts" class="label">أمثلة وسياقات: </label>
-        <ul id="contexts" class="vertical">
-            {% for context in entry.contexts %}
-            <p><span class="info context ar-context">{{context['arcontext']}}</span></p>
-            <p><span class="info context tr-context">{{context['trcontext']}}</span></p>
-            {%endfor%}
-        </ul>
-        {% endif %}
-    </div>
 
-</section>
+    
+{%  set categories = {'عرنجي النحو':' entry-tag-category-grammar',
+    'عرنجي الأسلوب':' entry-tag-category-style',
+    'عرنجي المعنى':' entry-tag-category-meaning'} %}
+    
+    
+    
+<div class="entry-flex">
+
+    <div class="entry-secondary-info">
+        <p class="entry-tag entry-tag-origin">من {{entry.origin}}</p>
+        {% if entry.category %} <p class="entry-tag entry-tag-category {{categories[entry.category]}}">{{entry.category}}</p> {% endif %}
+    </div>
+    
+    
+    <div class="entry-primary-info">
+        <p>
+            <label for="original" class="label">اللفظة الإفرنجية:</label>
+            <span id="original" class="info">{{entry.original}}</span>
+        </p>
+        <p>
+            <label for="translationese" class="label">اللفظة العرنجية: </label>
+            <span id="translationese" class="info">{{entry.translationese}}</span>
+        </p>
+        <p>
+            {% if entry.corrections %}
+            <label for="corrections" class="label">المعنى المراد: </label>
+            <ul id="corrections">
+                {% for correction in entry.corrections%}
+                <span class="correction info">{{correction['correction']}}</span>
+                {%endfor%}
+            </ul>
+            {% endif %}
+        </p>
+        
+        <p>
+            {% if entry.contexts %}
+            <label for="contexts" class="label">أمثلة وسياقات: </label>
+            <ul id="contexts" class="vertical">
+                {% for context in entry.contexts %}
+                <p><span class="info context tr-context">{{context['trcontext']}}</span></p>
+                <p><span class="info context ar-context">{{context['arcontext']}}</span></p>
+                {%endfor%}
+            </ul>
+            {% endif %}
+        </p>
+    </div>
+</div>

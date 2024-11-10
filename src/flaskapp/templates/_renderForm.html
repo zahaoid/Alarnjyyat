@@ -1,7 +1,10 @@
-{% macro render_form(title, form, sub_html, add_margin=False) %}
+{% macro render_form(title, form, sub_html) %}
 
-{% if add_margin %} {% set class="centered-form" %} {% endif %}
-<div class={{class}}>
+{% block more_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/form.css') }}" type="text/css">
+{% endblock %}
+
+<div class="form-sheet"}>
     <h2>{{title}}</h2>
     <form action="" method="post">
         {{ form.hidden_tag() }}

@@ -1,11 +1,11 @@
 {% from "_renderField.html" import render_field %}
 
-{{render_field(form.username, horizontal=False)}}
-{{render_field(form.password, horizontal=False)}}
-{{render_field(form.remember_me, horizontal=True)}}
-{{render_field(form.submit, hide_label=True)}}
+{{render_field(form.username, vertical=True, class="stretched-field")}}
+{{render_field(form.password, vertical=True, class="stretched-field")}}
+{{render_field(form.remember_me)}}
+{{render_field(form.submit, hide_label=True, class="stretched-field")}}
 
-<p id="register-prompt">
+<p>
     إن ما سبق لك التسجيل فسجّل 
     <a href= "{{ url_for('register') }}" >هنا</a>
 </p>

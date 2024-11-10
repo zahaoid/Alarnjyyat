@@ -2,11 +2,12 @@
 
 <p>هذه صفحة الرصد لمن شاء المساهمة في معجمنا هذا, جميع المرصودات يدققها المشرفون فإما تُقبل وتنشر في المعجم, وإما تُرد</p>
 
-{{render_field(form.original, horizontal=False)}}
-{{render_field(form.translationese, horizontal=False)}}
-{{render_field(form.origin, horizontal=False)}}
-{{render_field(form.corrections, horizontal=False)}}
+{{render_field(form.original, vertical=True, class="stretched-field")}}
+{{render_field(form.translationese, vertical=True, class="stretched-field")}}
+{{render_field(form.category, vertical=True, class="stretched-field")}}
+{{render_field(form.origin, vertical=True, class="stretched-field")}}
+{{render_field(form.corrections, vertical=True, class="stretched-field")}}
 {% for field in form.context %}
-{{render_field(field, horizontal=False)}}
+{{render_field(field, vertical=True, class="stretched-field")}}
 {% endfor %}
-{{render_field(form.submit, hide_label=True)}}
+{{render_field(form.submit, hide_label=True, class="stretched-field")}}

@@ -48,8 +48,16 @@ class ContextForm(Form):
 class AddEntry(FlaskForm):
     original = StringField('اللفظة الأعجمية مكتوبة بلغتها:', render_kw={"placeholder": "مثال: Negatives"}, validators=[DataRequired(), Length(max=32)])
     translationese = StringField('اللفظة العرنجية مكتوبة بالعربية:', render_kw={"placeholder": "مثال: سلبيات"}, validators=[DataRequired(), Length(max=32)])
-    origin = SelectField('دخيل من', validators=[DataRequired()], choices=list(ar.languages.items()))
+    languages=[
+        'كلام الإنجليز',
+        'كلام الفرنسيس',
+        'كلام الألمان',
+        'كلام أهل الصين',
+        'كلام أهل اليابان',
+        'غير ذلك'
+    ]
+    origin = SelectField('دخيل من:', validators=[DataRequired()], choices=list(languages))
     corrections = StringField('المعنى المراد (اختياري), افصل بين المعاني بفواصل:', render_kw={"placeholder": "مثال: مساوئ, عيوب"}, validators=[Length(max=256)])
     context = FormField(ContextForm, "سياق ورود المعنى (اختياري):")
-
+    category = SelectField("الإشكال (اختياري):", choices=list(['عرنجي الأسلوب', 'عرنجي النحو', 'عرنجي المعنى']) )
     submit = SubmitField("أضف")

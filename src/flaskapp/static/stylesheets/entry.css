@@ -1,22 +1,35 @@
-.correction, .context{
-    padding: 3px;
+
+.entry{
+    padding: 10px;
+    margin: 20px;
     border-radius: 5px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.correction, .context{
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-right: 6px;
+    padding-left: 6px;
+    border-radius: 16px;
     align-items: center;
     justify-content: space-between;
     margin: 0.1rem;
 }
 
 .correction{
-    background-color: rgba(139, 69, 19, 0.137);
+    background-color: #F7E7DC;
 }
 
 .tr-context:before{
-    content: "ولا تقل: ";
+    content: "لا تقل: ";
     color: red;
 }
 
 .ar-context:before{
-    content: "قل: ";
+    content: "بل قل: ";
     color: green;
 }
 
@@ -29,3 +42,49 @@
     color: black;
 }
 
+.entry-action-bar a {
+    color: black;
+    font-weight: bold;
+}
+
+.entry-flex{
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+}
+
+.entry-tag{
+    border-radius: 16px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-right: 8px;
+    padding-left: 8px;
+    text-align: center;
+    margin-bottom: 8px;
+    font-size: small;
+    color: white;
+}
+
+.entry-tag-origin{
+    background-color: #758694;
+}
+
+.entry-tag-category{
+    background-color: grey;
+}
+
+.entry-tag-category.entry-tag-category-style{
+    background-color: lightsteelblue;
+}
+.entry-tag-category.entry-tag-category-grammar{
+    background-color: darkseagreen;
+}
+.entry-tag-category.entry-tag-category-meaning{
+    background-color: lightpink;
+}
+
+.entry-action-bar{
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}

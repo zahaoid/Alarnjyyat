@@ -40,7 +40,6 @@ class Querier(Consumer):
         with self.connection as con, con.cursor() as cur:
             cur.execute(args)
             entries = cur.fetchall()
-
         for entry in entries:
             self.appendPropertiesToBaseEntry(baseEntry=entry)
         return entries
@@ -90,9 +89,9 @@ class Querier(Consumer):
             cur.execute(query, values)
        
     
-    def addEntry(self, origin: str, original: str, translationese: str, submitter: str, corrections: list[str], contexts: list[tuple[str, str]] ):
-        query = "INSERT INTO entries (origin, original, translationese, submitter) VALUES (%s, %s, %s, %s) RETURNING id;"
-        values = (origin, original, translationese, submitter)
+    def addEntry(self, origin: str, original: str, translationese: str, submitter: str, corrections: list[str], contexts: list[tuple[str, str]], category: str ):
+        query = "INSERT INTO entries (origin, original, translationese, submitter, category) VALUES (%s, %s, %s, %s, %s) RETURNING id;"
+        values = (origin, original, translationese, submitter, category)
         with self.connection as con, con.cursor() as cur:
             cur.execute(query, values)
             entryid = cur.fetchone()['id']

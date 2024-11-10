@@ -1,39 +1,43 @@
 {% extends "base.html" %}
 
+{% block more_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/home.css') }}" type="text/css">
+{% endblock %}
+
 {% block content %}
 
-    <div class="entry-listing">
-        <h2>آخر المرصودات</h2>
-
-        <div class="entry-listing-content">
-            {% set ns = namespace(first=True) %}
-            {%for entry in entries%}
-                {% if ns.first == False %}
-                    <div class="entry-seperator">
-
-                    </div>
-                {% endif %}
-                {% set ns.first = False %}
-                    
-                <div class="entry">
-                    {%include '_entry.html'%}
-                </div>
-                <div class="entry-action-bar">
-                <a class="action" href=" {{url_for ('entry_page', entryid=entry.id ) }} ">اطلاع</a>
-                {% if current_user.isadmin and not entry.approvedby %}
-                    <a class="action" href=" {{url_for ('accept', entryid=entry.id ) }} ">قبول اللفظة</a> 
-                {% endif %} 
-                </div>
-                 
-            {%endfor%}
-
-            {% if prev_url %}
-                <a href="{{ prev_url }}">اللاحقة</a>
-            {% endif %}
-            {% if next_url %}
-                <a href="{{ next_url }}">السابقة</a>
-            {% endif %}
+    <div class="home-flex">
+        
+        <div class="secondary-content">
+            {%for entry in approvedentries%}
+                <a href="{{url_for('entry_page', entryid=entry.id )}}"><span class="famous-word">{{entry.translationese}}</span></a>
+            {% endfor%}
         </div>
+
+        
+        <div class="entry-listing primary-content">
+            <h2>آخر المرصودات</h2>
+    
+            {%for entry in entries%}
+    
+                <section class="entry">
+                    <div class="entry-info">
+                        {%include '_entry.html'%}
+                    </div>
+                    <nav class="entry-action-bar">
+                        <a href=" {{url_for ('entry_page', entryid=entry.id ) }} ">اطلاع</a>
+                        {% if current_user.isadmin and not entry.approvedby %}
+                            <a href=" {{url_for ('accept', entryid=entry.id ) }} ">قبول اللفظة</a> 
+                        {% endif %} 
+                    </nav>
+                </section>
+                <hr>
+                     
+            {%endfor%}
+        </div>
+
+        
+        
     </div>
     
 {% endblock %}

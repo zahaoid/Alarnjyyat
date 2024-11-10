@@ -1,0 +1,37 @@
+
+
+
+.home-flex{
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}
+
+.secondary-content{
+    flex: 1;
+}
+
+.primary-content{
+    flex: 4;
+}
+
+hr{
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(128, 128, 128, 0.253);
+}
+
+.famous-word{
+    border-radius: 16px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-right: 8px;
+    padding-left: 8px;
+    text-align: center;
+    margin-bottom: 8px;
+    font-size: small;
+    background-color: rgba(0, 0, 0, 0.219);
+    color: white;
+}
+
+

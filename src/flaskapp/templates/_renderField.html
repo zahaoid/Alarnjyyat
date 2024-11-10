@@ -1,15 +1,13 @@
-{% macro render_field(field, hide_label=False, horizontal=True) %}
+{% macro render_field(field, hide_label=False, vertical=False, class="") %}
 
+{% set class = class + " block" if vertical else class %}
 
 <div>
-    {% set tag = "div" if not horizontal else "span" %}
-    <div>
-        {% if not hide_label %}
-        <{{tag}}>{{field.label}}</{{tag}}>
-        {% endif %}
-        <{{tag}}>{{field(**kwargs)|safe}}</{{tag}}>
-    </div>
-    <ul class="errors">
+    {% if not hide_label %}
+    {{field.label}}
+    {% endif %}
+    {{field(class_= class)|safe}}
+    <ul class="error">
         {% for error in field.errors %}
         <li>[{{ error }}]</li>
         {% endfor %}

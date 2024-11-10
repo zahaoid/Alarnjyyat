@@ -15,7 +15,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template("home.html", entries= qr.getAllEntries())
+    approvedentries = entries = qr.getAllEntries()
+    return render_template("home.html", entries= entries, approvedentries=approvedentries)
 
 @app.route('/discord')
 def discord():
@@ -45,7 +46,7 @@ def login():
     if loginform.validate_on_submit():
         user_info = qr.getUser(loginform.username.data)
         if not user_info or not check_password_hash(user_info['passwordhash'] ,loginform.password.data):
-            flash(ar.username +" و"+ ar.password +" أو إحداهما خاطئ")
+            flash(ar.username +" و"+ ar.password +" أو إحداهما خاطئ", "error")
             return redirect(url_for('login'))
         user = User(username=user_info['username'], isadmin=user_info['isadmin'])
         login_user(user, remember=loginform.remember_me.data)
@@ -113,6 +114,7 @@ def add_entry():
         arcontext = entryform.context.data['arcontext']
         trcontext = entryform.context.data['trcontext']
         contexts = list[tuple[str, str]]()
+        category = entryform.category.data
 
         # TRCONTEXT FIRST THEN ARCONTEXT!!
         contexts.append((trcontext, arcontext))
@@ -122,7 +124,7 @@ def add_entry():
                     translationese = entryform.translationese.data,
                     submitter = current_user.username if current_user.is_authenticated else None, 
                     corrections = corrections, 
-                    contexts=contexts)
+                    contexts=contexts, category=category)
         
         flash('رصدت اللفظة, وسيراجعها أحد المشرفين لقبولها ونشرها')
         return redirect(url_for('index'))
@@ -146,7 +148,7 @@ def pending():
         return "لا يجوز لك دخول هذه الصفحة", 404
     
     entries = qr.getAllEntries(desc=False, limit=None, isapproved=False)
-    return render_template("home.html", entries= entries)
+    return render_template("home.html", entries= entries, approvedentries= qr.getAllEntries())
 
 @app.route('/pending/<int:entryid>')
 @login_required
