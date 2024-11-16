@@ -115,6 +115,7 @@ def add_entry():
         trcontext = entryform.context.data['trcontext']
         contexts = list[tuple[str, str]]()
         category = entryform.category.data
+        elaboration = entryform.elaboration.data
 
         # TRCONTEXT FIRST THEN ARCONTEXT!!
         contexts.append((trcontext, arcontext))
@@ -124,7 +125,9 @@ def add_entry():
                     translationese = entryform.translationese.data,
                     submitter = current_user.username if current_user.is_authenticated else None, 
                     corrections = corrections, 
-                    contexts=contexts, category=category)
+                    contexts=contexts,
+                    category=category,
+                    elaboration=elaboration)
         
         flash('رصدت اللفظة, وسيراجعها أحد المشرفين لقبولها ونشرها')
         return redirect(url_for('index'))

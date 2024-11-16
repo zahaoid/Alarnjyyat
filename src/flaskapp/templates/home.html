@@ -2,25 +2,25 @@
 
 {% block more_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/home.css') }}" type="text/css">
+<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/entry.css') }}" type="text/css">
 {% endblock %}
 
 {% block content %}
-
-    <div class="home-flex">
         
+    <div class="home-flex">
         <div class="secondary-content">
             {%for entry in approvedentries%}
                 <a href="{{url_for('entry_page', entryid=entry.id )}}"><span class="famous-word">{{entry.translationese}}</span></a>
             {% endfor%}
         </div>
-
+    
         
         <div class="entry-listing primary-content">
             <h2>آخر المرصودات</h2>
     
             {%for entry in entries%}
     
-                <section class="entry">
+                <section class="homepage-entry">
                     <div class="entry-info">
                         {%include '_entry.html'%}
                     </div>
@@ -31,13 +31,14 @@
                         {% endif %} 
                     </nav>
                 </section>
-                <hr>
-                     
+
+                <hr class="entry-listing-seperator">
+                        
             {%endfor%}
         </div>
+    </div>
 
         
         
-    </div>
     
 {% endblock %}

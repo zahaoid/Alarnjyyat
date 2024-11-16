@@ -14,7 +14,7 @@ form{
     
 }
 
-form input, form p{
+.form-input-block, form p{
     margin-bottom: 32px;
 
 }

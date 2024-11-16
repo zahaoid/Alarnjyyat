@@ -29,8 +29,8 @@ class RegisterForm(FlaskForm):
             raise ValidationError('هذا سبق استعماله, اختر غيره أو سجّل دخولك به')
 
 class ContextForm(Form):
-    trcontext = StringField('السياق العرنجي', render_kw={"placeholder": "مثال: كن إيجابي!"}, validators=[Length(max=64)])
-    arcontext = StringField('السياق الصحيح', render_kw={"placeholder": "مثال: تفاءل!"}, validators=[Length(max=64)])
+    trcontext = StringField('السياق العرنجي', render_kw={"placeholder": "مثال: كن إيجابي!"}, validators=[Length(max=128)])
+    arcontext = StringField('السياق الصحيح', render_kw={"placeholder": "مثال: تفاءل!"}, validators=[Length(max=128)])
 
     def validate_trcontext(self, trcontext):
         self.validate_context(trcontext.data, self.arcontext.data)
@@ -60,4 +60,5 @@ class AddEntry(FlaskForm):
     corrections = StringField('المعنى المراد (اختياري), افصل بين المعاني بفواصل:', render_kw={"placeholder": "مثال: مساوئ, عيوب"}, validators=[Length(max=256)])
     context = FormField(ContextForm, "سياق ورود المعنى (اختياري):")
     category = SelectField("الإشكال (اختياري):", choices=list(['عرنجي الأسلوب', 'عرنجي النحو', 'عرنجي المعنى']) )
+    elaboration = TextAreaField('التعليل (اختياري):', validators=[Length(max=2048)])
     submit = SubmitField("أضف")

@@ -1,9 +1,3 @@
-{% block more_css%} 
-<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/entry.css') }}" type="text/css">
-{% endblock %}
-
-
-    
 {%  set categories = {'عرنجي النحو':' entry-tag-category-grammar',
     'عرنجي الأسلوب':' entry-tag-category-style',
     'عرنجي المعنى':' entry-tag-category-meaning'} %}
@@ -19,35 +13,45 @@
     
     
     <div class="entry-primary-info">
-        <p>
+        <p class="entry-info-block">
             <label for="original" class="label">اللفظة الإفرنجية:</label>
             <span id="original" class="info">{{entry.original}}</span>
         </p>
-        <p>
+        <p class="entry-info-block">
             <label for="translationese" class="label">اللفظة العرنجية: </label>
             <span id="translationese" class="info">{{entry.translationese}}</span>
         </p>
-        <p>
-            {% if entry.corrections %}
+
+        {% if entry.corrections %}
+        <div class="entry-info-block">
             <label for="corrections" class="label">المعنى المراد: </label>
             <ul id="corrections">
                 {% for correction in entry.corrections%}
-                <span class="correction info">{{correction['correction']}}</span>
+                <li class="correction info">{{correction['correction']}}</li>
                 {%endfor%}
             </ul>
-            {% endif %}
-        </p>
+        </div>
+        {% endif %}
         
-        <p>
-            {% if entry.contexts %}
+        {% if entry.contexts %}
+        <p class="entry-info-block">
             <label for="contexts" class="label">أمثلة وسياقات: </label>
             <ul id="contexts" class="vertical">
                 {% for context in entry.contexts %}
-                <p><span class="info context tr-context">{{context['trcontext']}}</span></p>
-                <p><span class="info context ar-context">{{context['arcontext']}}</span></p>
+                <li class="info context tr-context">{{context['trcontext']}}</li>
+                <li class="info context ar-context">{{context['arcontext']}}</li>
                 {%endfor%}
             </ul>
-            {% endif %}
         </p>
+        {% endif %}
+
+        {% if entry.elaboration %}
+        <p class="entry-info-block">
+            <label for="elaboration" class="label">التعليل: </label>
+            <p id="elaboration">{{entry.elaboration}}</p>
+        </p>
+        {% endif %}
+
+        
     </div>
 </div>

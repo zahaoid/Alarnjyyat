@@ -1,12 +1,4 @@
 
-.entry{
-    padding: 10px;
-    margin: 20px;
-    border-radius: 5px;
-    align-items: center;
-    justify-content: space-between;
-}
-
 
 .correction, .context{
     padding-top: 3px;
@@ -21,6 +13,11 @@
 
 .correction{
     background-color: #F7E7DC;
+    display: inline-block;
+}
+
+#corrections, #contexts{
+    list-style: none;
 }
 
 .tr-context:before{
@@ -42,6 +39,9 @@
     color: black;
 }
 
+.entry-info-block{
+    margin-bottom: 10px;
+}
 .entry-action-bar a {
     color: black;
     font-weight: bold;
@@ -54,6 +54,7 @@
 }
 
 .entry-tag{
+    min-width: 90px;
     border-radius: 16px;
     padding-top: 1px;
     padding-bottom: 1px;
@@ -87,4 +88,8 @@
     display: flex;
     flex-direction: row;
     gap: 16px;
+}
+
+.entry-submission-info{
+    margin-top: 20px;
 }

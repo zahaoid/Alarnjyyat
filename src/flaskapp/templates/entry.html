@@ -1,10 +1,14 @@
+{% block more_css%} 
+<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/entry.css') }}" type="text/css">
+{% endblock %}
+
 {% extends 'base.html' %}
 
 {% block content %}
 
     {% include '_entry.html' %}
 
-    <p>
+    <p class="entry-submission-info">
         <span>رصدها: {{"زائرٌ كريم" if entry.submitter==None else entry.submitter}}</span>
         <span>عند: {{entry.timestamp}}</span>
         <span>قبلها ودققها: {{entry.approvedby}}</span>

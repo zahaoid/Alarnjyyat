@@ -10,4 +10,5 @@
 {% for field in form.context %}
 {{render_field(field, vertical=True, class="stretched-field")}}
 {% endfor %}
+{{render_field(form.elaboration, vertical=True, class="stretched-field")}}
 {{render_field(form.submit, hide_label=True, class="stretched-field")}}

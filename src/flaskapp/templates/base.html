@@ -3,6 +3,7 @@
 
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1"> 
         
         <title>معجم العرنجيات</title>
         
@@ -17,40 +18,62 @@
         {% block more_css %} {% endblock %}
     </head>
 
-    <body >
-        <header>
-            <a href= "{{ url_for('index') }}"><h1 class="header-website-title">معجم العرنجيات</h1></a>
-            <nav class="header-nav-bar">
-                <a href= "{{ url_for('index') }}" >الصفحة العامة</a>
-                <a href= "{{ url_for('discord') }}" >مجلس الدسكورد</a>
-                <a href= "{{ url_for('add_entry') }}" >رصد الألفاظ</a>
-                {% if current_user.is_anonymous %}
-                <a href= "{{ url_for('login') }}" >{{ar.login}}</a>
-                {% else %}
-                <a href= "{{ url_for('logout') }}" >{{ar.logout}}</a>
-                {% endif %}
-                {% if current_user.isadmin %}
-                <a href= "{{ url_for('pending') }}" >{{ar.accept}}</a>
-                {% endif %}
-            </nav>
-            <input class="header-search" type="text" placeholder="البحث في المعجم">
-            <p class="header-greeting-message">حللت أهلًا {{'زائرنا الكريم' if current_user.is_anonymous else 'يا ' + current_user.username }}</p>            
+    <body class="body">
+        <header class="header">
+            <div class="header-flex">
+                <h1 class="header-website-title">
+                    <a href= "{{ url_for('index') }}">
+                        معجم العرنجيات         
+                    </a>    
+                </h1>
+                <nav class="header-nav-bar">
+                    <ul>
+                        <li>
+                            <a href= "{{ url_for('index') }}" >الصفحة العامة</a>
+                        </li>
+                        <li>
+                            <a href= "{{ url_for('discord') }}" >مجلس الدسكورد</a>
+                        </li>
+                        <li>
+                            <a href= "{{ url_for('add_entry') }}" >رصد الألفاظ</a>
+                        </li>
+                        {% if current_user.is_anonymous %}
+                        <li>
+                            <a href= "{{ url_for('login') }}" >{{ar.login}}</a>
+                        </li>
+                        {% else %}
+                        <li>
+                            <a href= "{{ url_for('logout') }}" >{{ar.logout}}</a>
+                        </li>
+                        {% endif %}
+                        {% if current_user.isadmin %}
+                        <li>
+                            <a href= "{{ url_for('pending') }}" >{{ar.accept}}</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+            <!-- <input class="header-search box2" type="text" placeholder="البحث في المعجم">
+            <p class="header-greeting-message">حللت أهلًا {{'زائرنا الكريم' if current_user.is_anonymous else 'يا ' + current_user.username }}</p>             -->
         </header>
 
         <main>
 
             
-            {% with messages = get_flashed_messages(with_categories=True) %}
-            {% if messages %}
-            <ul class="flash-messages">
-                {% for category, message in messages %}
-                <li class="{{ category }}"><strong>{{ message }}<strong></li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-            {% endwith %}
+            <div class="main-content">
+                {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                <ul class="flash-messages">
+                    {% for category, message in messages %}
+                    <li class="{{ category }}"><strong>{{ message }}<strong></li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% endwith %}
 
-            {% block content %}{% endblock %}
+                {% block content %}{% endblock %}
+            </div>
         </main>
 
         <footer>
